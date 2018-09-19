@@ -32,11 +32,11 @@ async def sign_tx_step(ctx, msg, state):
     gc.collect()
 
     from apps.monero.controller import iface, wrapper
-    from apps.monero.protocol.tsx_sign_builder import TTransactionBuilder
+    from apps.monero.protocol.tsx_sign_builder import TransactionSigningState
 
     if msg.MESSAGE_WIRE_TYPE == MessageType.MoneroTransactionInitRequest:
         creds = await wrapper.monero_get_creds(ctx, msg.address_n, msg.network_type)
-        state = TTransactionBuilder(iface.get_iface(ctx), creds)
+        state = TransactionSigningState(iface.get_iface(ctx), creds)
         del creds
 
     gc.collect()
